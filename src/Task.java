@@ -10,6 +10,7 @@ public class Task {
         this.description = description;
         this.status = Status.NEW;
     }
+
     public int getId() {
         return id;
     }

@@ -92,13 +92,12 @@ public class TaskManager {
 
     public void deleteTasks() {
         tasks.clear();
-        epics.clear();
-        subtasks.clear();
+
     }
 
     public void deleteEpics(){
         epics.clear();
-        subtasks.clear();
+
     }
 
     public void deleteSubtasks(){
