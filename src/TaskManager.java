@@ -4,6 +4,7 @@ import java.util.List;
 
 
 public class TaskManager {
+
     private int nextId = 1;
     private final HashMap<Integer, Task> tasks = new HashMap<>();
     private final HashMap<Integer, Epic> epics = new HashMap<>();
@@ -45,7 +46,7 @@ public class TaskManager {
         return new ArrayList<>(subtasks.values());
     }
 
-    public List<Subtask> subtasksByEpic(int epicId){
+    public List<Subtask> getSubtasksByEpic(int epicId){ //метод возвращающий все подзадачи эпика по идентификатору эпика
         Epic epic = epics.get(epicId);
         if (epic != null) {
             List<Subtask> subtasksList = new ArrayList<>();
@@ -87,6 +88,21 @@ public class TaskManager {
 
     public Subtask getSubtaskById(int id){
         return subtasks.get(id);
+    }
+
+    public void deleteTasks() {
+        tasks.clear();
+        epics.clear();
+        subtasks.clear();
+    }
+
+    public void deleteEpics(){
+        epics.clear();
+        subtasks.clear();
+    }
+
+    public void deleteSubtasks(){
+        subtasks.clear();
     }
 
     public void deleteTaskByID(int id){
