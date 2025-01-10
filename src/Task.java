@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Task {
 
     private int id;
@@ -31,7 +33,7 @@ public class Task {
         return status;
     }
 
-    public void setStatus(Status status){
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -41,16 +43,20 @@ public class Task {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Task)) return false;
-        Task task = (Task) o;
-        return id == task.id;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Task)) return false;
+        Task task = (Task) obj;
+        return title.equals(task.title) && description.equals(task.description);
+    }
+
+    public boolean equalsFull(Task task) {
+        return this.id == task.id ;
     }
 
     @Override
     public int hashCode() {
-        return Integer.hashCode(id);
+        return Objects.hash(id, title, description);
     }
 }
 
