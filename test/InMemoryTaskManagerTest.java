@@ -1,3 +1,8 @@
+import com.clases.Tasks.Epic;
+import com.clases.Tasks.Subtask;
+import com.clases.Tasks.Task;
+import com.manager.taskManager.InMemoryTaskManager;
+import com.status.status.Status;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -98,7 +103,7 @@ class InMemoryTaskManagerTest {
 
         taskManager.getTaskById(1);
 
-        ArrayList<Task> history = taskManager.history;
+        ArrayList<Task> history = (ArrayList<Task>) taskManager.history;
 
         assertEquals(1, history.size());
         assertEquals(task, history.getFirst());
@@ -114,7 +119,7 @@ class InMemoryTaskManagerTest {
         int subtaskId = subtask.getId();
         taskManager.getSubtaskById(subtaskId);
 
-        ArrayList<Task> history = taskManager.history;
+        ArrayList<Task> history = (ArrayList<Task>) taskManager.history;
         assertEquals(1, history.size());
         assertEquals(subtask, history.getFirst(), "History");
     }

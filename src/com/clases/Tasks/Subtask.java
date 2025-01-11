@@ -1,4 +1,5 @@
-public class Subtask extends  Task{
+package com.clases.Tasks;
+public class Subtask extends Task {
 
     private final int epicId;
 
@@ -11,7 +12,7 @@ public class Subtask extends  Task{
         return epicId;
     }
 
-    @Override // переопределяем toString
+    @Override
     public String toString() {
         return getId() + ". " + getTitle() + "  " + getDescription() + " " + getStatus();
     }

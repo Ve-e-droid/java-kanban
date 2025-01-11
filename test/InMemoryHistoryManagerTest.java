@@ -1,4 +1,6 @@
-import org.junit.jupiter.api.Assertions;
+import com.clases.Tasks.Task;
+import com.manager.historyManager.InMemoryHistoryManager;
+import com.manager.taskManager.InMemoryTaskManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +38,7 @@ class InMemoryHistoryManagerTest {
             historyManager.addHistory(new Task("Task " + i, "Description " + i));
         }
 
-        ArrayList<Task> history = historyManager.getHistory();
+        List<Task> history = historyManager.getHistory();
         assertEquals(10, history.size(), "История должна содержать только 10 задач.");
         assertFalse(history.contains(new Task("Task 1", "Description 1")), "Первая задача должна быть удалена из истории.");
         assertTrue(history.contains(new Task("Task 12", "Description 12")), "Последняя задача должна быть в истории.");

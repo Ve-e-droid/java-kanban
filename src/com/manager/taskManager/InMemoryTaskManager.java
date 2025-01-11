@@ -1,3 +1,9 @@
+package com.manager.taskManager;
+import com.clases.Tasks.Epic;
+import com.clases.Tasks.Subtask;
+import com.clases.Tasks.Task;
+import com.status.status.Status;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -6,10 +12,10 @@ import java.util.List;
 public class InMemoryTaskManager implements TaskManager {
 
     private int nextId = 1;
-    final HashMap<Integer, Task> tasks = new HashMap<>();
-    final HashMap<Integer, Epic> epics = new HashMap<>();
-    final HashMap<Integer, Subtask> subtasks = new HashMap<>();
-    ArrayList<Task> history = new ArrayList<>();
+    public final HashMap<Integer, Task> tasks = new HashMap<>();
+    public final HashMap<Integer, Epic> epics = new HashMap<>();
+    public final HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    public List<Task> history = new ArrayList<>();
 
     @Override
     public Task createTask(Task task) {
@@ -185,6 +191,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
 }
+
 
 
 

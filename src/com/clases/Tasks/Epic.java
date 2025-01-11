@@ -1,3 +1,6 @@
+package com.clases.Tasks;
+import com.status.status.Status;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,5 +32,7 @@ public class Epic extends Task {
     }
 
 
-}
+    public void setStatus(Status status) {
 
+    }
+}
