@@ -5,15 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    
     private Node head;
     private Node tail;
     HashMap<Integer, Node> hisMap  = new HashMap<>();
 
    public Task remove(int id) {
        Node remNode = hisMap.get(id);
-       if(remNode != null){
-           removeNode(remNode);
+       if(remNode != null) {
+            removeNode(remNode);
        }
        return null;
    }
