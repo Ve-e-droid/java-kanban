@@ -56,9 +56,7 @@ class InMemoryTaskManagerTest {
         Subtask subtask = new Subtask("0", "Тест Subtask", epic.getId());
         subtask.setId(epic.getId());
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            taskManager.createSubtask(subtask);
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> taskManager.createSubtask(subtask));
 
         String expectedMessage = "Нельзя добавить самого себя в качестве подзадачи.";
         String actualMessage = exception.getMessage();
