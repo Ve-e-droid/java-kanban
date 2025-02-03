@@ -11,7 +11,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
    public Task remove(int id) {
        Node remNode = hisMap.get(id);
-       if(remNode != null) {
+        if(remNode != null) {
             removeNode(remNode);
        }
        return null;
