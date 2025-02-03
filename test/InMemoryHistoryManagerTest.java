@@ -26,8 +26,6 @@ class InMemoryHistoryManagerTest {
         taskManager.createTask(task);
         taskManager.getTaskById(task.getId());
 
-
-
         assertEquals(task, taskManager.historyManager.getHistory().getFirst() , "Задачи должны быть одинаковыми.");
     }
 
@@ -41,7 +39,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    void  linkLastTest(){
+    void  linkLastTest() {
         Task task = new Task("Задача 1", "описание 1");
         Task task2 = new Task("Задача 2", "описание 2");
         Task task3 = new Task("Задача 3", "описание 3");
@@ -59,7 +57,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    void removeContainsKey(){
+    void removeContainsKey() {
         Task task = new Task("Задача 1", "описание 1");
         Task task2 = new Task("Задача 2", "описание 2");
         Task task3 = new Task("Задача 3", "описание 3");

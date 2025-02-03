@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 public class InMemoryTaskManager implements TaskManager {
 
     private int nextId = 1;
@@ -25,7 +24,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Epic createEpic(Epic epic){
+    public Epic createEpic(Epic epic) {
 
         epic.setId(nextId++);
         epics.put(epic.getId(), epic);
@@ -33,7 +32,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Subtask createSubtask(Subtask subtask){
+    public Subtask createSubtask(Subtask subtask) {
 
         if (subtask.getId() == subtask.getEpicId()) {
             throw new IllegalArgumentException("Нельзя добавить самого себя в качестве подзадачи.");
@@ -50,22 +49,22 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Task> getAllTasks(){
+    public List<Task> getAllTasks() {
         return new ArrayList<>(tasks.values());
     }
 
     @Override
-    public List<Epic> getAllEpics(){
+    public List<Epic> getAllEpics() {
         return new ArrayList<>(epics.values());
     }
 
     @Override
-    public List<Subtask> getAllSubtasks(){
+    public List<Subtask> getAllSubtasks() {
         return new ArrayList<>(subtasks.values());
     }
 
     @Override
-    public List<Subtask> getSubtasksByEpic(int epicId){
+    public List<Subtask> getSubtasksByEpic(int epicId) {
         Epic epic = epics.get(epicId);
         if (epic != null) {
             List<Subtask> subtasksList = new ArrayList<>();
@@ -96,7 +95,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Task getTaskById(int id){
+    public Task getTaskById(int id) {
         Task task = tasks.get(id);
         if(task != null) {
             historyManager.addH(task);
@@ -105,18 +104,18 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Epic getEpicById(int id){
+    public Epic getEpicById(int id) {
         Epic epic = epics.get(id);
-        if(epic != null){
+        if(epic != null) {
             historyManager.addH(epic);
         }
         return epic;
     }
 
     @Override
-    public Subtask getSubtaskById(int id){
+    public Subtask getSubtaskById(int id) {
         Subtask subtask = subtasks.get(id);
-        if(subtask != null){
+        if(subtask != null) {
             historyManager.addH(subtask);
         }
         return subtask;
@@ -129,24 +128,24 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void deleteEpics(){
+    public void deleteEpics() {
         epics.clear();
 
     }
 
     @Override
-    public void deleteSubtasks(){
+    public void deleteSubtasks() {
         subtasks.clear();
     }
 
     @Override
-    public void deleteTaskByID(int id){
+    public void deleteTaskByID(int id) {
         tasks.remove(id);
 
     }
 
     @Override
-    public void deleteEpicById(int id){
+    public void deleteEpicById(int id) {
         Epic epic = epics.remove(id);
         for (Integer subtaskId : epic.getSubtaskIds()) {
             subtasks.remove(subtaskId);

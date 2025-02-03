@@ -9,7 +9,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     private Node tail;
     HashMap<Integer, Node> hisMap  = new HashMap<>();
 
-   public Task remove(int id){
+   public Task remove(int id) {
        Node remNode = hisMap.get(id);
        if(remNode != null){
            removeNode(remNode);
@@ -17,7 +17,7 @@ public class InMemoryHistoryManager implements HistoryManager {
        return null;
    }
 
-   public void linkLast(Task task){
+   public void linkLast(Task task) {
        Node newNode = new Node(task);
 
        if (hisMap.containsKey(task.getId())) {

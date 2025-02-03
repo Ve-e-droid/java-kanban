@@ -33,14 +33,14 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void testEpicsAreEqualWhenIdIsSame(){
+    void testEpicsAreEqualWhenIdIsSame() {
         epic.setId(1);
         epic2.setId(1);
         assertTrue(epic.equalsFull(epic2), "Эпики должны быть равны, если их идентификаторы равны");
     }
 
     @Test
-    void testSubtasksAreEqualWhenIdIsSame(){
+    void testSubtasksAreEqualWhenIdIsSame() {
         Subtask subtask = new Subtask("0","Тест Subtask", epic.getId());
         Subtask subtask2 = new Subtask("1","Тест Subtask", epic.getId());
         subtask.setId(1);
@@ -153,7 +153,7 @@ class InMemoryTaskManagerTest {
         assertTrue(subtasks.isEmpty());
     }
     @Test
-    void testDeleteTasks(){
+    void testDeleteTasks() {
         taskManager.createTask(task);
         taskManager.deleteTasks();
         assertTrue(taskManager.tasks.isEmpty(), "Удаленная задача должна быть null");
@@ -161,14 +161,14 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void testDeleteEpics(){
+    void testDeleteEpics() {
         taskManager.createEpic(epic);
         taskManager.deleteEpics();
         assertTrue(taskManager.epics.isEmpty(), "Удаленный эпик должен возвращать null");
     }
 
     @Test
-    void testDeleteSubtasks(){
+    void testDeleteSubtasks() {
         Subtask subtask = new Subtask("0", "Тест Subtask", epic.getId());
         epic.setId(1);
         subtask.setId(2);
@@ -178,7 +178,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void testGetAllTasks(){
+    void testGetAllTasks() {
         Task task = new Task("Задача 1", "описание 1");
         Task task2 = new Task("Задача 2", "описание 2");
         Task task3 = new Task("Задача 3", "описание 3");
@@ -191,7 +191,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void testGetAllEpics(){
+    void testGetAllEpics() {
         Epic epic = new Epic("Задача 1", "описание 1");
         Epic epic2 = new Epic("Задача 2", "описание 2");
         Epic epic3 = new Epic("Задача 3", "описание 3");
@@ -205,7 +205,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void  testGetAllSubtask(){
+    void  testGetAllSubtask() {
         Subtask subtask = new Subtask("0", "Тест Subtask", 1);
         Subtask subtask2 = new Subtask("0", "Тест Subtask",1);
         Subtask subtask3 = new Subtask("0", "Тест Subtask", 1);
