@@ -2,8 +2,8 @@ package com.manager.taskManager;
 import com.clases.Tasks.Epic;
 import com.clases.Tasks.Subtask;
 import com.clases.Tasks.Task;
+import com.manager.historyManager.InMemoryHistoryManager;
 import com.status.status.Status;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +15,7 @@ public class InMemoryTaskManager implements TaskManager {
     public final HashMap<Integer, Task> tasks = new HashMap<>();
     public final HashMap<Integer, Epic> epics = new HashMap<>();
     public final HashMap<Integer, Subtask> subtasks = new HashMap<>();
-    public List<Task> history = new ArrayList<>();
+    public InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
 
     @Override
     public Task createTask(Task task) {
@@ -65,7 +65,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Subtask> getSubtasksByEpic(int epicId){ //метод возвращающий все подзадачи эпика по идентификатору эпика
+    public List<Subtask> getSubtasksByEpic(int epicId){
         Epic epic = epics.get(epicId);
         if (epic != null) {
             List<Subtask> subtasksList = new ArrayList<>();
@@ -97,20 +97,29 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getTaskById(int id){
-        history.add(tasks.get(id));
-        return tasks.get(id);
+        Task task = tasks.get(id);
+        if(task != null) {
+            historyManager.addH(task);
+        }
+        return task;
     }
 
     @Override
     public Epic getEpicById(int id){
-        history.add(epics.get(id));
-        return epics.get(id);
+        Epic epic = epics.get(id);
+        if(epic != null){
+            historyManager.addH(epic);
+        }
+        return epic;
     }
 
     @Override
     public Subtask getSubtaskById(int id){
-        history.add(subtasks.get(id));
-        return subtasks.get(id);
+        Subtask subtask = subtasks.get(id);
+        if(subtask != null){
+            historyManager.addH(subtask);
+        }
+        return subtask;
     }
 
     @Override

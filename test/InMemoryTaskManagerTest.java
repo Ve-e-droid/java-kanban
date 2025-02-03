@@ -103,10 +103,10 @@ class InMemoryTaskManagerTest {
 
         taskManager.getTaskById(1);
 
-        ArrayList<Task> history = (ArrayList<Task>) taskManager.history;
+        ArrayList<Task> tasks = (ArrayList<Task>) taskManager.historyManager.getHistory();
 
-        assertEquals(1, history.size());
-        assertEquals(task, history.getFirst());
+        assertEquals(1, tasks.size());
+        assertEquals(task, tasks.getFirst());
     }
 
     @Test
@@ -119,7 +119,7 @@ class InMemoryTaskManagerTest {
         int subtaskId = subtask.getId();
         taskManager.getSubtaskById(subtaskId);
 
-        ArrayList<Task> history = (ArrayList<Task>) taskManager.history;
+        ArrayList<Task> history = (ArrayList<Task>) taskManager.historyManager.getHistory();
         assertEquals(1, history.size());
         assertEquals(subtask, history.getFirst(), "History");
     }
@@ -177,5 +177,46 @@ class InMemoryTaskManagerTest {
         taskManager.createSubtask(subtask);
         taskManager.deleteSubtasks();
         assertTrue(taskManager.subtasks.isEmpty(), "Удаленная подзадача должна быть null");
+    }
+
+    @Test
+    void testGetAllTasks(){
+        Task task = new Task("Задача 1", "описание 1");
+        Task task2 = new Task("Задача 2", "описание 2");
+        Task task3 = new Task("Задача 3", "описание 3");
+
+        taskManager.createTask(task);
+        taskManager.createTask(task2);
+        taskManager.createTask(task3);
+
+        assertEquals(3, taskManager.tasks.size() , "Список должен быть равен 3." );
+    }
+
+    @Test
+    void testGetAllEpics(){
+        Epic epic = new Epic("Задача 1", "описание 1");
+        Epic epic2 = new Epic("Задача 2", "описание 2");
+        Epic epic3 = new Epic("Задача 3", "описание 3");
+
+        taskManager.createEpic(epic);
+        taskManager.createEpic(epic2);
+        taskManager.createEpic(epic3);
+
+        assertEquals(3, taskManager.epics.size() , "Список должен быть равен 3." );
+
+    }
+
+    @Test
+    void  testGetAllSubtask(){
+        Subtask subtask = new Subtask("0", "Тест Subtask", 1);
+        Subtask subtask2 = new Subtask("0", "Тест Subtask",1);
+        Subtask subtask3 = new Subtask("0", "Тест Subtask", 1);
+
+        taskManager.createSubtask(subtask);
+        taskManager.createSubtask(subtask2);
+        taskManager.createSubtask(subtask3);
+
+        assertEquals(3, taskManager.subtasks.size() , "Список должен быть равен 3." );
+
     }
 }
