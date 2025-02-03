@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
+    
     private Node head;
     private Node tail;
     HashMap<Integer, Node> hisMap  = new HashMap<>();
