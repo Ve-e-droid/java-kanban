@@ -1,4 +1,5 @@
 package com.clases.Tasks;
+
 import com.status.status.Status;
 
 import java.util.Objects;
@@ -54,7 +55,7 @@ public class Task {
     }
 
     public boolean equalsFull(Task task) {
-        return this.id == task.id ;
+        return this.id == task.id;
     }
 
     @Override
