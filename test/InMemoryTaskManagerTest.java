@@ -206,9 +206,9 @@ class InMemoryTaskManagerTest {
 
     @Test
     void  testGetAllSubtask() {
-        Subtask subtask = new Subtask("0", "Тест Subtask", 1);
-        Subtask subtask2 = new Subtask("0", "Тест Subtask",1);
-        Subtask subtask3 = new Subtask("0", "Тест Subtask", 1);
+        Subtask subtask = new Subtask("1", "Тест Subtask", 1);
+        Subtask subtask2 = new Subtask("2", "Тест Subtask",1);
+        Subtask subtask3 = new Subtask("3", "Тест Subtask", 1);
 
         taskManager.createSubtask(subtask);
         taskManager.createSubtask(subtask2);
