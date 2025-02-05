@@ -1,29 +1,31 @@
-package com.manager.historyManager;
+package com.manager.historymanager;
 
-import com.clases.Tasks.Task;
+import com.model.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private Node head;
     private Node tail;
-    HashMap<Integer, Node> hisMap  = new HashMap<>();
+    Map<Integer, Node> historyMap  = new HashMap<>();
 
-   public Task remove(int id) {
-       Node remNode = hisMap.get(id);
+   public void remove(int id) {
+       Node remNode = historyMap.get(id);
        if (remNode != null) {
             removeNode(remNode);
        }
-       return null;
+
+
    }
 
    public void linkLast(Task task) {
        Node newNode = new Node(task);
 
-       if (hisMap.containsKey(task.getId())) {
-           removeNode(hisMap.get(task.getId()));
+       if (historyMap.containsKey(task.getId())) {
+           removeNode(historyMap.get(task.getId()));
        }
 
        if (tail == null) {
@@ -34,7 +36,7 @@ public class InMemoryHistoryManager implements HistoryManager {
            newNode.prev = tail;
            tail = newNode;
        }
-       hisMap.put(task.getId(), newNode);
+       historyMap.put(task.getId(), newNode);
    }
 
     public List<Task> getTasks() {
@@ -59,15 +61,15 @@ public class InMemoryHistoryManager implements HistoryManager {
         } else {
             tail = node.prev;
         }
-        hisMap.remove(node.task.getId());
+        historyMap.remove(node.task.getId());
     }
 
 
     @Override
-    public void addH(Task task) {
-        if (hisMap.containsKey(task.getId())) {
+    public void addHistory(Task task) {
+        if (historyMap.containsKey(task.getId())) {
 
-            removeNode(hisMap.get(task.getId()));
+            removeNode(historyMap.get(task.getId()));
         }
 
         linkLast(task);

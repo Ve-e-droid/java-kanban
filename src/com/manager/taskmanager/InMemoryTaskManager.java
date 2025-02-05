@@ -1,9 +1,9 @@
-package com.manager.taskManager;
+package com.manager.taskmanager;
 
-import com.clases.Tasks.Epic;
-import com.clases.Tasks.Subtask;
-import com.clases.Tasks.Task;
-import com.manager.historyManager.InMemoryHistoryManager;
+import com.model.tasks.Epic;
+import com.model.tasks.Subtask;
+import com.model.tasks.Task;
+import com.manager.historymanager.InMemoryHistoryManager;
 import com.status.status.Status;
 
 import java.util.ArrayList;
@@ -100,7 +100,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Task getTaskById(int id) {
         Task task = tasks.get(id);
         if (task != null) {
-            historyManager.addH(task);
+            historyManager.addHistory(task);
         }
         return task;
     }
@@ -109,7 +109,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Epic getEpicById(int id) {
         Epic epic = epics.get(id);
         if (epic != null) {
-            historyManager.addH(epic);
+            historyManager.addHistory(epic);
         }
         return epic;
     }
@@ -118,7 +118,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Subtask getSubtaskById(int id) {
         Subtask subtask = subtasks.get(id);
         if (subtask != null) {
-            historyManager.addH(subtask);
+            historyManager.addHistory(subtask);
         }
         return subtask;
     }

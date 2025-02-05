@@ -1,5 +1,5 @@
-package com.manager.historyManager;
-import com.clases.Tasks.Task;
+package com.manager.historymanager;
+import com.model.tasks.Task;
 
 public class Node {
     Task task;

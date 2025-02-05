@@ -1,7 +1,7 @@
-import com.clases.Tasks.Epic;
-import com.clases.Tasks.Subtask;
-import com.clases.Tasks.Task;
-import com.manager.taskManager.InMemoryTaskManager;
+import com.model.tasks.Epic;
+import com.model.tasks.Subtask;
+import com.model.tasks.Task;
+import com.manager.taskmanager.InMemoryTaskManager;
 import com.status.status.Status;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

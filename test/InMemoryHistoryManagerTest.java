@@ -1,11 +1,10 @@
-import com.clases.Tasks.Task;
-import com.manager.historyManager.InMemoryHistoryManager;
-import com.manager.taskManager.InMemoryTaskManager;
+import com.model.tasks.Task;
+import com.manager.historymanager.InMemoryHistoryManager;
+import com.manager.taskmanager.InMemoryTaskManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InMemoryHistoryManagerTest {
@@ -32,10 +31,16 @@ class InMemoryHistoryManagerTest {
 
     @Test
     void tasksHistoryDelete() {
-        historyManager.addH(new Task("Task " + 1, "Description " + 1));
-       Task deleteTask = historyManager.remove(0);
+        Task task = new Task("Задача 1", "описание 1");
+        Task task2 = new Task("Задача 2", "описание 2");
+        taskManager.createTask(task);
+        taskManager.createTask(task2);
+        taskManager.getTaskById(task.getId());
+        taskManager.getTaskById(task2.getId());
 
-        Assertions.assertNull(deleteTask, "Удаленная задача должна возвращать null");
+        taskManager.historyManager.remove(task.getId());
+
+        assertEquals(task2, taskManager.historyManager.getHistory().getFirst() , "Задача 2 должна быть первой.");
 
     }
 

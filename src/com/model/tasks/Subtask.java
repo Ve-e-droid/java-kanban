@@ -1,4 +1,4 @@
-package com.clases.Tasks;
+package com.model.tasks;
 public class Subtask extends Task {
 
     private final int epicId;
