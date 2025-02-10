@@ -1,7 +1,6 @@
 import com.model.tasks.Task;
-import com.manager.historymanager.InMemoryHistoryManager;
-import com.manager.taskmanager.InMemoryTaskManager;
-import org.junit.jupiter.api.Assertions;
+import com.main.structure.historymanager.InMemoryHistoryManager;
+import com.main.structure.taskmanager.InMemoryTaskManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

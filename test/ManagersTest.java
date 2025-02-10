@@ -1,8 +1,8 @@
-import com.manager.historymanager.HistoryManager;
-import com.manager.historymanager.InMemoryHistoryManager;
-import com.manager.taskmanager.InMemoryTaskManager;
-import com.manager.taskmanager.TaskManager;
-import com.managers.managers.Managers;
+import com.main.structure.historymanager.HistoryManager;
+import com.main.structure.historymanager.InMemoryHistoryManager;
+import com.main.structure.taskmanager.InMemoryTaskManager;
+import com.main.structure.taskmanager.TaskManager;
+import com.managers.Managers;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

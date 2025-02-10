@@ -1,10 +1,10 @@
-package com.manager.taskmanager;
+package com.main.structure.taskmanager;
 
 import com.model.tasks.Epic;
 import com.model.tasks.Subtask;
 import com.model.tasks.Task;
-import com.manager.historymanager.InMemoryHistoryManager;
-import com.status.status.Status;
+import com.main.structure.historymanager.InMemoryHistoryManager;
+import com.status.Status;
 
 import java.util.ArrayList;
 import java.util.HashMap;

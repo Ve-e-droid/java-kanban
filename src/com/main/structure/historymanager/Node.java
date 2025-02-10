@@ -1,4 +1,4 @@
-package com.manager.historymanager;
+package com.main.structure.historymanager;
 import com.model.tasks.Task;
 
 public class Node {

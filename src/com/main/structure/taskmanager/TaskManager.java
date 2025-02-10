@@ -1,4 +1,4 @@
-package com.manager.taskmanager;
+package com.main.structure.taskmanager;
 
 import com.model.tasks.Epic;
 import com.model.tasks.Subtask;

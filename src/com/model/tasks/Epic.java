@@ -1,5 +1,5 @@
 package com.model.tasks;
-import com.status.status.Status;
+import com.status.Status;
 
 import java.util.ArrayList;
 import java.util.List;
