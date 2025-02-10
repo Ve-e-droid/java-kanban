@@ -1,13 +1,11 @@
-import com.clases.Tasks.Task;
-import com.manager.historyManager.InMemoryHistoryManager;
-import com.manager.taskManager.InMemoryTaskManager;
+import com.model.tasks.Task;
+import com.main.structure.historymanager.InMemoryHistoryManager;
+import com.main.structure.taskmanager.InMemoryTaskManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.*;
 class InMemoryHistoryManagerTest {
 
     private InMemoryTaskManager taskManager;
@@ -21,27 +19,64 @@ class InMemoryHistoryManagerTest {
 
     @Test
     void addTasksToHistory() {
-        ArrayList<Task> history = new ArrayList<>();
+
         Task task = new Task("Задача 1", "описание 1");
 
         taskManager.createTask(task);
         taskManager.getTaskById(task.getId());
-        history.add(taskManager.tasks.get(task.getId()));
 
-        assertEquals(1, history.size(), "История должна содержать одну задачу");
-        assertEquals(task, history.getFirst(), "Задачи должны быть одинаковыми.");
+        assertEquals(task, taskManager.historyManager.getHistory().getFirst() , "Задачи должны быть одинаковыми.");
     }
 
     @Test
-    void tasksHistoryDeleteMoreThan10() {
-        for (int i = 1; i <= 12; i++) {
-            historyManager.addHistory(new Task("Task " + i, "Description " + i));
-        }
+    void tasksHistoryDelete() {
+        Task task = new Task("Задача 1", "описание 1");
+        Task task2 = new Task("Задача 2", "описание 2");
+        taskManager.createTask(task);
+        taskManager.createTask(task2);
+        taskManager.getTaskById(task.getId());
+        taskManager.getTaskById(task2.getId());
 
-        List<Task> history = historyManager.getHistory();
-        assertEquals(10, history.size(), "История должна содержать только 10 задач.");
-        assertFalse(history.contains(new Task("Task 1", "Description 1")), "Первая задача должна быть удалена из истории.");
-        assertTrue(history.contains(new Task("Task 12", "Description 12")), "Последняя задача должна быть в истории.");
+        taskManager.historyManager.remove(task.getId());
+
+        assertEquals(task2, taskManager.historyManager.getHistory().getFirst() , "Задача 2 должна быть первой.");
+
+    }
+
+    @Test
+    void  linkLastTest() {
+        Task task = new Task("Задача 1", "описание 1");
+        Task task2 = new Task("Задача 2", "описание 2");
+        Task task3 = new Task("Задача 3", "описание 3");
+
+        taskManager.createTask(task);
+        taskManager.createTask(task2);
+        taskManager.createTask(task3);
+
+        taskManager.getTaskById(task.getId());
+        taskManager.getTaskById(task2.getId());
+        taskManager.getTaskById(task3.getId());
+
+        assertEquals(task3, taskManager.historyManager.getHistory().getLast() , "Задача 3 должна быть последней.");
+
+    }
+
+    @Test
+    void removeContainsKey() {
+        Task task = new Task("Задача 1", "описание 1");
+        Task task2 = new Task("Задача 2", "описание 2");
+        Task task3 = new Task("Задача 3", "описание 3");
+
+        taskManager.createTask(task);
+        taskManager.createTask(task2);
+        taskManager.createTask(task3);
+
+        taskManager.getTaskById(task.getId());
+        taskManager.getTaskById(task2.getId());
+        taskManager.getTaskById(task3.getId());
+        taskManager.getTaskById(task.getId());
+
+        assertEquals(3, taskManager.historyManager.getHistory().size() , "Задача 3 должна быть последней.");
     }
 }
 
