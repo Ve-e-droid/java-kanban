@@ -1,13 +1,15 @@
-import com.clases.Tasks.Epic;
-import com.clases.Tasks.Subtask;
-import com.clases.Tasks.Task;
-import com.manager.taskManager.InMemoryTaskManager;
-import com.status.status.Status;
+import com.model.tasks.Epic;
+import com.model.tasks.Subtask;
+import com.model.tasks.Task;
+import com.main.structure.taskmanager.InMemoryTaskManager;
+import com.status.Status;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -33,14 +35,14 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void testEpicsAreEqualWhenIdIsSame(){
+    void testEpicsAreEqualWhenIdIsSame() {
         epic.setId(1);
         epic2.setId(1);
         assertTrue(epic.equalsFull(epic2), "Эпики должны быть равны, если их идентификаторы равны");
     }
 
     @Test
-    void testSubtasksAreEqualWhenIdIsSame(){
+    void testSubtasksAreEqualWhenIdIsSame() {
         Subtask subtask = new Subtask("0","Тест Subtask", epic.getId());
         Subtask subtask2 = new Subtask("1","Тест Subtask", epic.getId());
         subtask.setId(1);
@@ -56,9 +58,7 @@ class InMemoryTaskManagerTest {
         Subtask subtask = new Subtask("0", "Тест Subtask", epic.getId());
         subtask.setId(epic.getId());
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            taskManager.createSubtask(subtask);
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> taskManager.createSubtask(subtask));
 
         String expectedMessage = "Нельзя добавить самого себя в качестве подзадачи.";
         String actualMessage = exception.getMessage();
@@ -103,10 +103,10 @@ class InMemoryTaskManagerTest {
 
         taskManager.getTaskById(1);
 
-        ArrayList<Task> history = (ArrayList<Task>) taskManager.history;
+        ArrayList<Task> tasks = (ArrayList<Task>) taskManager.historyManager.getHistory();
 
-        assertEquals(1, history.size());
-        assertEquals(task, history.getFirst());
+        assertEquals(1, tasks.size());
+        assertEquals(task, tasks.getFirst());
     }
 
     @Test
@@ -119,7 +119,7 @@ class InMemoryTaskManagerTest {
         int subtaskId = subtask.getId();
         taskManager.getSubtaskById(subtaskId);
 
-        ArrayList<Task> history = (ArrayList<Task>) taskManager.history;
+        ArrayList<Task> history = (ArrayList<Task>) taskManager.historyManager.getHistory();
         assertEquals(1, history.size());
         assertEquals(subtask, history.getFirst(), "History");
     }
@@ -155,7 +155,7 @@ class InMemoryTaskManagerTest {
         assertTrue(subtasks.isEmpty());
     }
     @Test
-    void testDeleteTasks(){
+    void testDeleteTasks() {
         taskManager.createTask(task);
         taskManager.deleteTasks();
         assertTrue(taskManager.tasks.isEmpty(), "Удаленная задача должна быть null");
@@ -163,19 +163,60 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void testDeleteEpics(){
+    void testDeleteEpics() {
         taskManager.createEpic(epic);
         taskManager.deleteEpics();
         assertTrue(taskManager.epics.isEmpty(), "Удаленный эпик должен возвращать null");
     }
 
     @Test
-    void testDeleteSubtasks(){
+    void testDeleteSubtasks() {
         Subtask subtask = new Subtask("0", "Тест Subtask", epic.getId());
         epic.setId(1);
         subtask.setId(2);
         taskManager.createSubtask(subtask);
         taskManager.deleteSubtasks();
         assertTrue(taskManager.subtasks.isEmpty(), "Удаленная подзадача должна быть null");
+    }
+
+    @Test
+    void testGetAllTasks() {
+        Task task = new Task("Задача 1", "описание 1");
+        Task task2 = new Task("Задача 2", "описание 2");
+        Task task3 = new Task("Задача 3", "описание 3");
+
+        taskManager.createTask(task);
+        taskManager.createTask(task2);
+        taskManager.createTask(task3);
+
+        assertEquals(3, taskManager.tasks.size() , "Список должен быть равен 3." );
+    }
+
+    @Test
+    void testGetAllEpics() {
+        Epic epic = new Epic("Задача 1", "описание 1");
+        Epic epic2 = new Epic("Задача 2", "описание 2");
+        Epic epic3 = new Epic("Задача 3", "описание 3");
+
+        taskManager.createEpic(epic);
+        taskManager.createEpic(epic2);
+        taskManager.createEpic(epic3);
+
+        assertEquals(3, taskManager.epics.size() , "Список должен быть равен 3." );
+
+    }
+
+    @Test
+    void  testGetAllSubtask() {
+        Subtask subtask = new Subtask("1", "Тест Subtask", 1);
+        Subtask subtask2 = new Subtask("2", "Тест Subtask",1);
+        Subtask subtask3 = new Subtask("3", "Тест Subtask", 1);
+
+        taskManager.createSubtask(subtask);
+        taskManager.createSubtask(subtask2);
+        taskManager.createSubtask(subtask3);
+
+        assertEquals(3, taskManager.subtasks.size() , "Список должен быть равен 3." );
+
     }
 }
