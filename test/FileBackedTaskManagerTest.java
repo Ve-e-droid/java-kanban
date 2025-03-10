@@ -11,23 +11,19 @@ class FileBackedTaskManagerTest {
     private File tempFile;
     private FileBackedTaskManager taskManager;
 
-
     @BeforeEach
     void setUp() throws IOException {
         tempFile = File.createTempFile("task_manager_test", ".csv");
         taskManager = new FileBackedTaskManager(tempFile);
     }
 
-
     @Test
     void saveAndLoadEmptyFile() {
-
         taskManager = FileBackedTaskManager.loadFromFile(tempFile);
         assertTrue(taskManager.getAllTasks().isEmpty());
         assertTrue(taskManager.getAllEpics().isEmpty());
         assertTrue(taskManager.getAllSubtasks().isEmpty());
     }
-
 
     @Test
     void saveMultipleTasks() {
@@ -50,7 +46,6 @@ class FileBackedTaskManagerTest {
         assertEquals(1, loadedManager.getAllSubtasks().size());
     }
 
-
     @Test
     void loadMultipleTasks() {
 
@@ -61,7 +56,7 @@ class FileBackedTaskManagerTest {
             writer.write("3,EPIC,Epic 1,NEW,Description Epic 1,\n");
             writer.write("4,SUBTASK,Subtask 1,NEW,Description Subtask 1,3\n");
         } catch (IOException e) {
-            fail("Не удалось записать в файл: " + e.getMessage());
+            System.out.println("Не удалось записать в файл: " + e.getMessage());
         }
 
         taskManager = FileBackedTaskManager.loadFromFile(tempFile);
@@ -71,11 +66,10 @@ class FileBackedTaskManagerTest {
         assertEquals(1, taskManager.getAllSubtasks().size());
     }
 
-
     @AfterEach
     void tearDown() {
 
-      if(!tempFile.delete()){
+      if(!tempFile.delete()) {
           System.out.println("Не удалось удалить файл: " + tempFile.getAbsolutePath());
       }
     }

@@ -9,7 +9,8 @@ import static com.status.TaskType.*;
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
    private final File data;
-   public FileBackedTaskManager(File file){
+
+   public FileBackedTaskManager(File file) {
        this.data = file;
    }
 
@@ -35,36 +36,36 @@ save();
     }
 
     public void save() {
-       try(FileWriter fr = new FileWriter(data)) {
+       try (FileWriter fr = new FileWriter(data)) {
            fr.write("id,type,name,status,description,epic\n");
-           for (Task task : getAllTasks()){
+           for (Task task : getAllTasks()) {
                fr.write(taskToString(task));
            }
 
-           for (Epic epic : getAllEpics()){
+           for (Epic epic : getAllEpics()) {
                fr.write(epicToString(epic));
            }
 
-           for (Subtask subtask : getAllSubtasks()){
+           for (Subtask subtask : getAllSubtasks()) {
                fr.write(subtaskToString(subtask));
            }
 
-       } catch (IOException e){
+       } catch (IOException e) {
            throw new RuntimeException("Ошибка при сохранении данных в файл", e);
        }
 
     }
 
     protected static String taskToString(Task task) {
-        return task.getId() + "," + TASK + "," +  task.getTitle()  + "," + task.getStatus() + "," + task.getDescription()  + "," + "\n" ;
+        return task.getId() + "," + TASK + "," +  task.getTitle()  + "," + task.getStatus() + "," + task.getDescription()  + "," + "\n";
     }
 
     protected String epicToString(Epic epic) {
-        return epic.getId() + "," + EPIC + "," +  epic.getTitle()  + "," + epic.getStatus() + "," + epic.getDescription()  + "," + "\n" ;
+        return epic.getId() + "," + EPIC + "," +  epic.getTitle()  + "," + epic.getStatus() + "," + epic.getDescription()  + "," + "\n";
     }
 
     protected String subtaskToString(Subtask subtask) {
-        return subtask.getId() + "," + SUBTASK + "," +  subtask.getTitle()  + "," + subtask.getStatus() + "," + subtask.getDescription()  + "," + subtask.getEpicId() + "\n"  ;
+        return subtask.getId() + "," + SUBTASK + "," +  subtask.getTitle()  + "," + subtask.getStatus() + "," + subtask.getDescription()  + "," + subtask.getEpicId() + "\n";
     }
 
     public static FileBackedTaskManager loadFromFile(File file) {
@@ -92,7 +93,7 @@ save();
                             break;
                         case SUBTASK:
                             int epicId = Integer.parseInt(parts[5].trim());
-                            Subtask subtask = new Subtask( title, description, epicId);
+                            Subtask subtask = new Subtask(title, description, epicId);
                             manager.createSubtask(subtask);
                             break;
                     }
