@@ -29,12 +29,11 @@ class FileBackedTaskManagerTest {
     void saveMultipleTasks() {
         Task task1 = new Task("Task 1", "Description 1");
         Task task2 = new Task("Task 2", "Description 2");
-        Epic epic = new Epic("Epic 1", "Description Epic 1");
-        Subtask subtask = new Subtask("Subtask 1", "Description Subtask 1", epic.getId());
-
         taskManager.createTask(task1);
         taskManager.createTask(task2);
+        Epic epic = new Epic("Epic 1", "Description Epic 1");
         taskManager.createEpic(epic);
+        Subtask subtask = new Subtask("Subtask 1", "Description Subtask 1", epic.getId());
         taskManager.createSubtask(subtask);
 
         taskManager.save();
