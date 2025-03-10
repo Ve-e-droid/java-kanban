@@ -35,11 +35,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Subtask createSubtask(Subtask subtask) {
+       if (subtask.getEpicId() == subtask.getId()) {
 
-        if (subtask.getEpicId() == nextId) {
-            throw new IllegalArgumentException("Нельзя добавить самого себя в качестве подзадачи.");
+        throw new IllegalArgumentException("Нельзя добавить самого себя в качестве подзадачи.");
+
         }
-
         subtask.setId(nextId++);
         subtasks.put(subtask.getId(), subtask);
         Epic epic = epics.get(subtask.getEpicId());
