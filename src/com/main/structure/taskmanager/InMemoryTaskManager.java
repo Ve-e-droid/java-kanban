@@ -36,7 +36,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Subtask createSubtask(Subtask subtask) {
 
-        if (subtask.getId() == subtask.getEpicId()) {
+        if (subtask.getEpicId() == nextId) {
             throw new IllegalArgumentException("Нельзя добавить самого себя в качестве подзадачи.");
         }
 
