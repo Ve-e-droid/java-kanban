@@ -1,5 +1,6 @@
 package com.main.structure.historymanager;
 
+import com.managers.HistoryManager;
 import com.model.tasks.Task;
 
 import java.util.ArrayList;

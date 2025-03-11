@@ -1,6 +1,6 @@
 package com.status;
 
-public enum TaskType {
+public enum TaskTypeStatus {
     TASK,
     EPIC,
     SUBTASK

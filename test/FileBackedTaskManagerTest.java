@@ -3,7 +3,9 @@ import com.model.tasks.Epic;
 import com.model.tasks.Subtask;
 import com.model.tasks.Task;
 import org.junit.jupiter.api.*;
+
 import java.io.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class FileBackedTaskManagerTest {
@@ -68,8 +70,8 @@ class FileBackedTaskManagerTest {
     @AfterEach
     void tearDown() {
 
-      if(!tempFile.delete()) {
-          System.out.println("Не удалось удалить файл: " + tempFile.getAbsolutePath());
-      }
+        if (!tempFile.delete()) {
+            System.out.println("Не удалось удалить файл: " + tempFile.getAbsolutePath());
+        }
     }
 }
