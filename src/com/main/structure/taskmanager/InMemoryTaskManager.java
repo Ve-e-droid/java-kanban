@@ -1,5 +1,6 @@
 package com.main.structure.taskmanager;
 
+import com.managers.TaskManager;
 import com.model.tasks.Epic;
 import com.model.tasks.Subtask;
 import com.model.tasks.Task;
@@ -35,11 +36,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Subtask createSubtask(Subtask subtask) {
+       if (subtask.getEpicId() == subtask.getId()) {
+           throw new IllegalArgumentException("Нельзя добавить самого себя в качестве подзадачи.");
 
-        if (subtask.getId() == subtask.getEpicId()) {
-            throw new IllegalArgumentException("Нельзя добавить самого себя в качестве подзадачи.");
         }
-
         subtask.setId(nextId++);
         subtasks.put(subtask.getId(), subtask);
         Epic epic = epics.get(subtask.getEpicId());

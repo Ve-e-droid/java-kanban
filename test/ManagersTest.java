@@ -1,7 +1,7 @@
-import com.main.structure.historymanager.HistoryManager;
+import com.managers.HistoryManager;
 import com.main.structure.historymanager.InMemoryHistoryManager;
 import com.main.structure.taskmanager.InMemoryTaskManager;
-import com.main.structure.taskmanager.TaskManager;
+import com.managers.TaskManager;
 import com.managers.Managers;
 import org.junit.jupiter.api.Test;
 
