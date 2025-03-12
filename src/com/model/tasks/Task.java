@@ -14,7 +14,7 @@ public class Task {
     private Status status;
     private Duration duration;
     private LocalDateTime startTime;
-    
+
     public Task(String title, String description, Duration duration, LocalDateTime startTime) {
         this.title = title;
         this.description = description;
