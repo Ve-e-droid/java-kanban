@@ -1,6 +1,5 @@
 package com.main.structure.taskmanager;
 
-import com.comparator.TaskComparator;
 import com.managers.ManagerSaveException;
 import com.model.tasks.Epic;
 import com.model.tasks.Subtask;
@@ -10,13 +9,11 @@ import com.status.TaskTypeStatus;
 import java.io.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Set;
-import java.util.TreeSet;
 
 import static com.status.TaskTypeStatus.*;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
-    ComparatorTaskManager manager = new ComparatorTaskManager();
+
     private final File data;
 
     public FileBackedTaskManager(File file) {
