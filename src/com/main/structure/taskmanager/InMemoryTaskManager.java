@@ -19,6 +19,7 @@ public class InMemoryTaskManager implements TaskManager {
     public final HashMap<Integer, Subtask> subtasks = new HashMap<>();
     public InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
 
+
     @Override
     public Task createTask(Task task) {
         task.setId(nextId++);
@@ -36,8 +37,8 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Subtask createSubtask(Subtask subtask) {
-       if (subtask.getEpicId() == subtask.getId()) {
-           throw new IllegalArgumentException("Нельзя добавить самого себя в качестве подзадачи.");
+        if (subtask.getEpicId() == subtask.getId()) {
+            throw new IllegalArgumentException("Нельзя добавить самого себя в качестве подзадачи.");
 
         }
         subtask.setId(nextId++);

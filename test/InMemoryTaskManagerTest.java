@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +17,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
     private InMemoryTaskManager taskManager;
-    Task task = new Task("0", "Тест Task");
-    Task task2 = new Task("1", "Тест Task");
+    Task task = new Task("0", "Тест Task", Duration.ofHours(1), LocalDateTime.of(2023, 10, 1, 10, 0));
+    Task task2 = new Task("1", "Тест Task", Duration.ofHours(1), LocalDateTime.of(2023, 10, 2, 10, 0));
 
-    Epic epic = new Epic("0","Тест Epic");
-    Epic epic2 = new Epic("0","Тест Epic");
+    Epic epic = new Epic("0", "Тест Epic", Duration.ofHours(1), LocalDateTime.of(2023, 10, 1, 10, 0));
+    Epic epic2 = new Epic("0", "Тест Epic", Duration.ofHours(1), LocalDateTime.of(2023, 10, 2, 10, 0));
 
     @BeforeEach
     void setUp() {
@@ -43,8 +45,8 @@ class InMemoryTaskManagerTest {
 
     @Test
     void testSubtasksAreEqualWhenIdIsSame() {
-        Subtask subtask = new Subtask("0","Тест Subtask", epic.getId());
-        Subtask subtask2 = new Subtask("1","Тест Subtask", epic.getId());
+        Subtask subtask = new Subtask("0", "Тест Subtask", epic.getId(), Duration.ofHours(1), LocalDateTime.of(2023, 10, 1, 10, 0));
+        Subtask subtask2 = new Subtask("1", "Тест Subtask", epic.getId(), Duration.ofHours(1), LocalDateTime.of(2023, 10, 1, 12, 0));
         subtask.setId(1);
         subtask2.setId(1);
         assertTrue(subtask.equalsFull(subtask2), "Подзадачи должны быть равны, если их идентификаторы равны");
@@ -55,7 +57,7 @@ class InMemoryTaskManagerTest {
         epic.setId(1);
         taskManager.createEpic(epic);
 
-        Subtask subtask = new Subtask("0", "Тест Subtask", epic.getId());
+        Subtask subtask = new Subtask("0", "Тест Subtask", epic.getId(), Duration.ofHours(1), LocalDateTime.of(2023, 10, 1, 10, 0));
         subtask.setId(epic.getId());
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> taskManager.createSubtask(subtask));
@@ -85,7 +87,7 @@ class InMemoryTaskManagerTest {
     void createSubtaskTestAddSubtaskAndUpdateEpicStatus() {
         taskManager.createEpic(epic);
 
-        Subtask subtask = new Subtask("0", "Тест Subtask", epic.getId());
+        Subtask subtask = new Subtask("0", "Тест Subtask", epic.getId(), Duration.ofHours(1), LocalDateTime.of(2023, 10, 1, 10, 0));
         Subtask createdSubtask = taskManager.createSubtask(subtask);
 
         Assertions.assertNotNull(createdSubtask);
@@ -113,7 +115,7 @@ class InMemoryTaskManagerTest {
     void getSubtaskByIdTestAddToHistory() {
         taskManager.createEpic(epic);
 
-        Subtask subtask = new Subtask("0", "Тест Subtask", epic.getId());
+        Subtask subtask = new Subtask("0", "Тест Subtask", epic.getId(), Duration.ofHours(1), LocalDateTime.of(2023, 10, 1, 10, 0));
         taskManager.createSubtask(subtask);
 
         int subtaskId = subtask.getId();
@@ -136,7 +138,7 @@ class InMemoryTaskManagerTest {
     @Test
     void deleteEpicByIdTestRemoveEpicAndItsSubtasks() {
         taskManager.createEpic(epic);
-        Subtask subtask = new Subtask("0", "Subtask в epic", epic.getId());
+        Subtask subtask = new Subtask("0", "Subtask в epic", epic.getId(), Duration.ofHours(1), LocalDateTime.of(2023, 10, 1, 10, 0));
         taskManager.createSubtask(subtask);
         taskManager.deleteEpicById(epic.getId());
         Epic deleteEpic = taskManager.getEpicById(epic.getId());
@@ -148,12 +150,13 @@ class InMemoryTaskManagerTest {
     @Test
     void deleteSubtaskByIdTestRemoveSubtaskFromEpic() {
         taskManager.createEpic(epic);
-        Subtask subtask = new Subtask("0", "Тест Subtask", epic.getId());
+        Subtask subtask = new Subtask("0", "Тест Subtask", epic.getId(), Duration.ofHours(1), LocalDateTime.of(2023, 10, 1, 10, 0));
         taskManager.createSubtask(subtask);
         taskManager.deleteSubtaskById(subtask.getId());
         List<Subtask> subtasks = taskManager.getSubtasksByEpic(epic.getId());
         assertTrue(subtasks.isEmpty());
     }
+
     @Test
     void testDeleteTasks() {
         taskManager.createTask(task);
@@ -171,7 +174,7 @@ class InMemoryTaskManagerTest {
 
     @Test
     void testDeleteSubtasks() {
-        Subtask subtask = new Subtask("0", "Тест Subtask", epic.getId());
+        Subtask subtask = new Subtask("0", "Тест Subtask", epic.getId(), Duration.ofHours(1), LocalDateTime.of(2023, 10, 1, 10, 0));
         epic.setId(1);
         subtask.setId(2);
         taskManager.createSubtask(subtask);
@@ -181,42 +184,42 @@ class InMemoryTaskManagerTest {
 
     @Test
     void testGetAllTasks() {
-        Task task = new Task("Задача 1", "описание 1");
-        Task task2 = new Task("Задача 2", "описание 2");
-        Task task3 = new Task("Задача 3", "описание 3");
+        Task task = new Task("Задача 1", "описание 1", Duration.ofHours(1), LocalDateTime.of(2023, 10, 1, 10, 0));
+        Task task2 = new Task("Задача 2", "описание 2", Duration.ofHours(1), LocalDateTime.of(2023, 10, 2, 10, 0));
+        Task task3 = new Task("Задача 3", "описание 3", Duration.ofHours(1), LocalDateTime.of(2023, 10, 3, 10, 0));
 
         taskManager.createTask(task);
         taskManager.createTask(task2);
         taskManager.createTask(task3);
 
-        assertEquals(3, taskManager.tasks.size() , "Список должен быть равен 3." );
+        assertEquals(3, taskManager.tasks.size(), "Список должен быть равен 3.");
     }
 
     @Test
     void testGetAllEpics() {
-        Epic epic = new Epic("Задача 1", "описание 1");
-        Epic epic2 = new Epic("Задача 2", "описание 2");
-        Epic epic3 = new Epic("Задача 3", "описание 3");
+        Epic epic = new Epic("Задача 1", "описание 1", Duration.ofHours(1), LocalDateTime.of(2023, 10, 1, 10, 0));
+        Epic epic2 = new Epic("Задача 2", "описание 2", Duration.ofHours(1), LocalDateTime.of(2023, 10, 2, 10, 0));
+        Epic epic3 = new Epic("Задача 3", "описание 3", Duration.ofHours(1), LocalDateTime.of(2023, 10, 3, 10, 0));
 
         taskManager.createEpic(epic);
         taskManager.createEpic(epic2);
         taskManager.createEpic(epic3);
 
-        assertEquals(3, taskManager.epics.size() , "Список должен быть равен 3." );
+        assertEquals(3, taskManager.epics.size(), "Список должен быть равен 3.");
 
     }
 
     @Test
-    void  testGetAllSubtask() {
-        Subtask subtask = new Subtask("1", "Тест Subtask", 1);
-        Subtask subtask2 = new Subtask("2", "Тест Subtask",1);
-        Subtask subtask3 = new Subtask("3", "Тест Subtask", 1);
+    void testGetAllSubtask() {
+        Subtask subtask = new Subtask("1", "Тест Subtask", 1, Duration.ofHours(1), LocalDateTime.of(2023, 10, 1, 10, 0));
+        Subtask subtask2 = new Subtask("2", "Тест Subtask", 1, Duration.ofHours(1), LocalDateTime.of(2023, 10, 2, 10, 0));
+        Subtask subtask3 = new Subtask("3", "Тест Subtask", 1, Duration.ofHours(1), LocalDateTime.of(2023, 10, 3, 10, 0));
 
         taskManager.createSubtask(subtask);
         taskManager.createSubtask(subtask2);
         taskManager.createSubtask(subtask3);
 
-        assertEquals(3, taskManager.subtasks.size() , "Список должен быть равен 3." );
+        assertEquals(3, taskManager.subtasks.size(), "Список должен быть равен 3.");
 
     }
 }

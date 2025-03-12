@@ -1,4 +1,4 @@
-id,type,name,status,description,epic
+id,type,name,status,description,duration,startTime,epic
 1,TASK, Сделать домашку,NEW, Выполнить задачи по математике,
 2,TASK, Купить продукты,NEW, Купить молоко и хлеб,
 4,TASK,Сделать домашку,NEW,Выполнить задачи по математике,
