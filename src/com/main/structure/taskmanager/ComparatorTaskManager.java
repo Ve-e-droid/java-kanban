@@ -17,6 +17,7 @@ public class ComparatorTaskManager {
         if (task.getStartTime() == null) {
             throw new IllegalArgumentException("Время начала не может быть null.");
         }
+        updateTask(task);
         tasks.add(task);
     }
 
@@ -29,7 +30,7 @@ public class ComparatorTaskManager {
     }
 
     private boolean isTimeOverlapping(Task task1, Task task2) {
-        if (task1.getStartTime() == null || task2.getStartTime() == null) {
+        if (task1.getStartTime() == null || task2.getStartTime() == null || task1.getDuration() == null || task2.getDuration() == null) {
             return false;
         }
 
@@ -37,5 +38,14 @@ public class ComparatorTaskManager {
         LocalDateTime endTime2 = task2.getStartTime().plus(task2.getDuration());
 
         return task1.getStartTime().isBefore(endTime2) && task2.getStartTime().isBefore(endTime1);
+    }
+
+    public void updateTask(Task task) {
+        if (tasks.contains(task)) {
+            tasks.remove(task);
+            tasks.add(task);
+        }
+
+
     }
 }

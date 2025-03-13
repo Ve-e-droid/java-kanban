@@ -7,16 +7,16 @@ import com.model.tasks.Task;
 import com.main.structure.historymanager.InMemoryHistoryManager;
 import com.status.Status;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
 
     private int nextId = 1;
-    public final HashMap<Integer, Task> tasks = new HashMap<>();
-    public final HashMap<Integer, Epic> epics = new HashMap<>();
-    public final HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    public HashMap<Integer, Task> tasks = new HashMap<>();
+    public HashMap<Integer, Epic> epics = new HashMap<>();
+    public HashMap<Integer, Subtask> subtasks = new HashMap<>();
     public InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
 
 
@@ -47,6 +47,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (epic != null) {
             epic.addSubtaskId(subtask.getId());
             updateEpicStatus(epic);
+            recalculateDuration(epic);
         }
         return subtask;
     }
@@ -199,6 +200,42 @@ public class InMemoryTaskManager implements TaskManager {
         } else {
             epic.setStatus(Status.NEW);
         }
+    }
+
+    public void recalculateDuration(Epic epic) {
+        Duration duration = Duration.ZERO;
+        LocalDateTime startTime = null;
+        LocalDateTime endTime = null;
+
+        for (int subtaskId : epic.getSubtaskIds()) {
+            Subtask subtask = subtasks.get(subtaskId);
+
+            if (subtask != null) {
+                duration = epic.getDuration().plus(subtask.getDuration());
+                if (subtask.getStartTime() != null) {
+                    if (startTime == null || subtask.getStartTime().isBefore(startTime)) {
+                        startTime = subtask.getStartTime();
+
+                    }
+
+                } else {
+                    System.out.println("subtask.getStartTime() равна null.");
+                }
+                LocalDateTime subtaskEndTime = subtask.getStartTime().plus(subtask.getDuration());
+
+                if (endTime == null || subtaskEndTime.isAfter(endTime)) {
+                    endTime = subtaskEndTime;
+                }
+            } else {
+                System.out.println("Подзадача с ID " + subtaskId + " не найдена.");
+            }
+
+        }
+
+        epic.setDuration(duration);
+        epic.setStartTime(startTime);
+        epic.setEndTime(endTime);
+
     }
 
 }

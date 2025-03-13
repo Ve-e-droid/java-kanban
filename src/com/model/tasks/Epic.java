@@ -15,11 +15,11 @@ public class Epic extends Task {
     private LocalDateTime endTime;
 
     public Epic(String title, String description, Duration duration, LocalDateTime startTime) {
-        super(title, description, Duration.ZERO, null);
+        super(title, description, duration, startTime);
         this.subtaskIds = new ArrayList<>();
-        this.duration = Duration.ZERO;
-        this.startTime = null;
-        this.endTime = null;
+        this.duration = duration;
+        this.startTime = startTime;
+        this.endTime = endTime();
     }
 
     public List<Integer> getSubtaskIds() {
@@ -34,25 +34,6 @@ public class Epic extends Task {
         subtaskIds.remove(Integer.valueOf(id));
     }
 
-    public void recalculateDuration(List<Task> subtasks) {
-        duration = Duration.ZERO;
-        startTime = null;
-        endTime = null;
-
-        for (int subtaskId : subtaskIds) {
-            Task subtask = subtasks.get(subtaskId);
-            duration = duration.plus(subtask.getDuration());
-
-            if (startTime == null || subtask.getStartTime().isBefore(startTime)) {
-                startTime = subtask.getStartTime();
-            }
-
-            if (endTime == null || subtask.getStartTime().plus(subtask.getDuration()).isAfter(endTime)) {
-                endTime = subtask.getStartTime().plus(subtask.getDuration());
-            }
-        }
-    }
-
     @Override
     public LocalDateTime getStartTime() {
         return startTime;
@@ -60,15 +41,24 @@ public class Epic extends Task {
 
     @Override
     public Duration getDuration() {
-
         return duration;
     }
-
 
     public LocalDateTime getEndTime() {
         return endTime;
     }
 
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
 
     @Override
     public String toString() {

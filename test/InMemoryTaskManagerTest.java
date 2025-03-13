@@ -222,4 +222,15 @@ class InMemoryTaskManagerTest {
         assertEquals(3, taskManager.subtasks.size(), "Список должен быть равен 3.");
 
     }
+
+    @Test
+    void testRecalculateDuration() {
+        Epic epic3 = new Epic("0", "Тест Epic", Duration.ofHours(1), LocalDateTime.of(2023, 10, 2, 10, 0));
+        taskManager.createEpic(epic3);
+        Subtask subtask = new Subtask("0", "Subtask в epic", epic3.getId(), Duration.ofHours(1), LocalDateTime.of(2023, 10, 2, 10, 30));
+        taskManager.createSubtask(subtask);
+
+        assertEquals(Duration.ofHours(2), epic3.getDuration());
+
+    }
 }

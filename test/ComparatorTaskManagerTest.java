@@ -44,9 +44,7 @@ public class ComparatorTaskManagerTest {
 
         taskManager.addTask(task1);
         taskManager.addTask(task2);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            taskManager.addTask(task2);
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> taskManager.addTask(task2));
 
         assertEquals("Задача пересекается с другой задачей.", exception.getMessage());
     }
@@ -72,9 +70,7 @@ public class ComparatorTaskManagerTest {
         taskManager = new ComparatorTaskManager();
         Task task1 = new Task("Task 1", "Description 1", Duration.ofHours(1), null);
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            taskManager.addTask(task1);
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> taskManager.addTask(task1));
 
         assertNotNull(exception);
     }
