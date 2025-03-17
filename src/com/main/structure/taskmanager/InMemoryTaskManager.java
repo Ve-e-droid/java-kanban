@@ -9,6 +9,7 @@ import com.status.Status;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
@@ -151,8 +152,10 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteEpicById(int id) {
         Epic epic = epics.remove(id);
-        for (Integer subtaskId : epic.getSubtaskIds()) {
-            subtasks.remove(subtaskId);
+        if (epic != null) {
+            for (Integer subtaskId : epic.getSubtaskIds()) {
+                subtasks.remove(subtaskId);
+            }
         }
     }
 
@@ -234,11 +237,13 @@ public class InMemoryTaskManager implements TaskManager {
 
         epic.setDuration(duration);
         epic.setStartTime(startTime);
-        epic.setEndTime(endTime);
+        epic.endTime();
 
     }
 
 }
+
+
 
 
 

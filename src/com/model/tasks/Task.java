@@ -1,5 +1,8 @@
 package com.model.tasks;
 
+import com.adapter.DurationAdapter;
+import com.adapter.LocalDateTimeAdapter;
+import com.google.gson.annotations.JsonAdapter;
 import com.status.Status;
 
 import java.time.Duration;
@@ -11,14 +14,16 @@ public class Task {
     private int id;
     private final String title;
     private final String description;
-    private Status status;
+
+    private Status status = Status.NEW;
+    @JsonAdapter(DurationAdapter.class)
     private Duration duration;
+    @JsonAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime startTime;
 
     public Task(String title, String description, Duration duration, LocalDateTime startTime) {
         this.title = title;
         this.description = description;
-        this.status = Status.NEW;
         this.duration = duration;
         this.startTime = startTime;
     }
