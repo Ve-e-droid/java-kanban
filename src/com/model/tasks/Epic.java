@@ -1,7 +1,6 @@
 package com.model.tasks;
 
-import com.adapter.LocalDateTimeAdapter;
-import com.google.gson.annotations.JsonAdapter;
+
 import com.status.Status;
 
 import java.time.Duration;
@@ -12,7 +11,6 @@ import java.util.List;
 public class Epic extends Task {
     private final List<Integer> subtaskIds;
 
-    
     public Epic(String title, String description, Duration duration, LocalDateTime startTime) {
         super(title, description, duration, startTime);
         this.subtaskIds = new ArrayList<>();
