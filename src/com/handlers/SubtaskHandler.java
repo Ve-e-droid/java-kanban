@@ -58,11 +58,14 @@ public class SubtaskHandler extends BaseHttpHandler {
             String idString = requestURI.substring(requestURI.lastIndexOf("/") + 1);
 
             int id = Integer.parseInt(idString);
-
-            manager.deleteSubtaskById(id);
-            sendText(exchange, gson.toJson("Subtask deleted"), 200);
+            if (!(manager.getSubtaskById(id) == null)) {
+                manager.deleteSubtaskById(id);
+                sendText(exchange, gson.toJson("Subtask deleted"), 200);
+            } else {
+                sendText(exchange, "{\"error\":\"Invalid ID\"}", 400);
+            }
         } else {
-            sendNotFound(exchange);
+            sendText(exchange, "{\"error\":\"Invalid requestURI\"}", 400);
         }
     }
 
@@ -100,7 +103,7 @@ public class SubtaskHandler extends BaseHttpHandler {
             sendText(exchange, gson.toJson(subtask), 201);
         } catch (JsonSyntaxException e) {
 
-            sendText(exchange, "{\"error\":\"Invalid JSON\"}", 404);
+            sendText(exchange, "{\"error\":\"Invalid JSON\"}", 400);
         }
     }
 }

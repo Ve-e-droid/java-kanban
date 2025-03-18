@@ -26,7 +26,7 @@ public class EpicHandler extends BaseHttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        try {
+        try (exchange) {
             String method = exchange.getRequestMethod();
 
             switch (method) {
@@ -40,14 +40,13 @@ public class EpicHandler extends BaseHttpHandler {
                     handleDeleteEpic(exchange);
                     break;
                 default:
-
+                    System.out.println("Метода " + exchange + " нет в списке.");
                     break;
             }
 
         } catch (IOException e) {
             exchange.sendResponseHeaders(500, -1);
-        } finally {
-            exchange.close();
+
         }
     }
 
@@ -74,7 +73,7 @@ public class EpicHandler extends BaseHttpHandler {
                     sendNotFound(exchange);
                     return;
                 }
-                taskManager.deleteEpicById(1);
+                taskManager.deleteEpicById(epic.getId());
                 sendText(exchange, gson.toJson("Epic with ID " + id + " deleted"), 200);
 
             } catch (NumberFormatException e) {
@@ -119,7 +118,7 @@ public class EpicHandler extends BaseHttpHandler {
             sendText(exchange, gson.toJson(epic), 201);
         } catch (JsonSyntaxException e) {
 
-            sendText(exchange, "{\"error\":\"Invalid JSON\"}", 404);
+            sendText(exchange, "{\"error\":\"Invalid JSON\"}", 400);
         }
     }
 }

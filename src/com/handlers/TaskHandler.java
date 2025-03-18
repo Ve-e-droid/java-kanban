@@ -63,8 +63,12 @@ public class TaskHandler extends BaseHttpHandler {
 
             String idString = urlParts[2];
             int id = Integer.parseInt(idString);
-            manager.deleteTaskByID(id);
-            sendText(exchange, gson.toJson("Task " + id + " deleted."), 200);
+            if (!(manager.getTaskById(id) == null)) {
+                manager.deleteTaskByID(id);
+                sendText(exchange, gson.toJson("Task " + id + " deleted."), 200);
+            } else {
+                sendText(exchange, "{\"error\":\"Invalid ID\"}", 400);
+            }
 
         } else {
             sendNotFound(exchange);

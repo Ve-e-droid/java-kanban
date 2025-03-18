@@ -12,13 +12,10 @@ import java.util.List;
 
 
 public class HistoryHandler extends BaseHttpHandler {
-
-    private InMemoryTaskManager taskManager;
     private final InMemoryHistoryManager historyManager;
     private final Gson gson;
 
-    public HistoryHandler(InMemoryTaskManager taskManager, InMemoryHistoryManager historyManager, Gson gson) {
-        this.taskManager = taskManager;
+    public HistoryHandler(InMemoryHistoryManager historyManager, Gson gson) {
         this.historyManager = historyManager;
         this.gson = gson;
 

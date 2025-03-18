@@ -40,7 +40,7 @@ public class HttpTaskServer {
         httpServer.createContext("/epics", new EpicHandler(taskManager, gson));
         httpServer.createContext("/subtasks", new SubtaskHandler(manager, gson));
         InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-        httpServer.createContext("/history", new HistoryHandler(taskManager, historyManager, gson));
+        httpServer.createContext("/history", new HistoryHandler(historyManager, gson));
 
 
     }
