@@ -1,8 +1,6 @@
 package com.model.tasks;
 
 
-import com.status.Status;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -52,7 +50,7 @@ public class Epic extends Task {
         return getId() + ". " + getTitle() + " " + getDescription() + " " + getStatus() + " " + getDuration() + " " + getStartTime();
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(TaskType.Status status) {
         super.setStatus(status);
     }
 }

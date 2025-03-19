@@ -23,7 +23,7 @@ public class TaskHandler extends BaseHttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        try {
+        try (exchange) {
 
             String method = exchange.getRequestMethod();
 
@@ -43,8 +43,6 @@ public class TaskHandler extends BaseHttpHandler {
 
         } catch (IOException e) {
             exchange.sendResponseHeaders(500, -1);
-        } finally {
-            exchange.close();
         }
     }
 

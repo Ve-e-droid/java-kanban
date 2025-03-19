@@ -5,7 +5,7 @@ import com.model.tasks.Epic;
 import com.model.tasks.Subtask;
 import com.model.tasks.Task;
 import com.main.structure.historymanager.InMemoryHistoryManager;
-import com.status.Status;
+import com.model.tasks.TaskType;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -186,22 +186,22 @@ public class InMemoryTaskManager implements TaskManager {
         for (Integer id : subtaskIds) {
             Subtask subtask = subtasks.get(id);
             if (subtask != null) {
-                if (subtask.getStatus() == Status.IN_PROGRESS) {
+                if (subtask.getStatus() == TaskType.Status.IN_PROGRESS) {
                     anyInProgress = true;
                     allDone = false;
                     break;
-                } else if (subtask.getStatus() == Status.NEW) {
+                } else if (subtask.getStatus() == TaskType.Status.NEW) {
                     allDone = false;
                 }
             }
         }
 
         if (allDone) {
-            epic.setStatus(Status.DONE);
+            epic.setStatus(TaskType.Status.DONE);
         } else if (anyInProgress) {
-            epic.setStatus(Status.IN_PROGRESS);
+            epic.setStatus(TaskType.Status.IN_PROGRESS);
         } else {
-            epic.setStatus(Status.NEW);
+            epic.setStatus(TaskType.Status.NEW);
         }
     }
 

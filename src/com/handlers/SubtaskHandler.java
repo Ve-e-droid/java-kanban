@@ -44,8 +44,6 @@ public class SubtaskHandler extends BaseHttpHandler {
             }
         } catch (IOException e) {
             exchange.sendResponseHeaders(500, -1);
-        } finally {
-            exchange.close();
         }
 
     }
@@ -62,7 +60,7 @@ public class SubtaskHandler extends BaseHttpHandler {
                 manager.deleteSubtaskById(id);
                 sendText(exchange, gson.toJson("Subtask deleted"), 200);
             } else {
-                sendText(exchange, "{\"error\":\"Invalid ID\"}", 400);
+                sendText(exchange, "{\"error\":\"Invalid ID\"}", 404);
             }
         } else {
             sendText(exchange, "{\"error\":\"Invalid requestURI\"}", 400);

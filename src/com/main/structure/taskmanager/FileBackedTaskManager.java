@@ -4,13 +4,13 @@ import com.managers.ManagerSaveException;
 import com.model.tasks.Epic;
 import com.model.tasks.Subtask;
 import com.model.tasks.Task;
-import com.status.TaskTypeStatus;
+import com.model.tasks.TaskType;
 
 import java.io.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-import static com.status.TaskTypeStatus.*;
+import static com.model.tasks.TaskType.*;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
@@ -86,7 +86,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 String[] parts = line.split(",");
                 if (parts.length >= 7) {
                     int id = Integer.parseInt(parts[0]);
-                    TaskTypeStatus type = TaskTypeStatus.valueOf(parts[1].trim());
+                    TaskType type = TaskType.valueOf(parts[1].trim());
                     String title = parts[2];
                     String status = parts[3];
                     String description = parts[4];

@@ -2,7 +2,7 @@ import com.model.tasks.Epic;
 import com.model.tasks.Subtask;
 import com.model.tasks.Task;
 import com.main.structure.taskmanager.InMemoryTaskManager;
-import com.status.Status;
+import com.model.tasks.TaskType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -73,7 +73,7 @@ class InMemoryTaskManagerTest {
         Task createdTask = taskManager.createTask(task);
         Assertions.assertNotNull(createdTask);
         assertEquals(1, createdTask.getId());
-        assertEquals(Status.NEW, createdTask.getStatus());
+        assertEquals(TaskType.Status.NEW, createdTask.getStatus());
     }
 
     @Test
@@ -96,7 +96,7 @@ class InMemoryTaskManagerTest {
 
 
         Epic updatedEpic = taskManager.getEpicById(epic.getId());
-        assertEquals(Status.NEW, updatedEpic.getStatus());
+        assertEquals(TaskType.Status.NEW, updatedEpic.getStatus());
     }
 
     @Test
