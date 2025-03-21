@@ -11,34 +11,34 @@ import java.util.Map;
 public class InMemoryHistoryManager implements HistoryManager {
     private Node head;
     private Node tail;
-    Map<Integer, Node> historyMap  = new HashMap<>();
+    Map<Integer, Node> historyMap = new HashMap<>();
 
-   public void remove(int id) {
-       Node remNode = historyMap.get(id);
-       if (remNode != null) {
+    public void remove(int id) {
+        Node remNode = historyMap.get(id);
+        if (remNode != null) {
             removeNode(remNode);
-       }
+        }
 
 
-   }
+    }
 
-   public void linkLast(Task task) {
-       Node newNode = new Node(task);
+    public void linkLast(Task task) {
+        Node newNode = new Node(task);
 
-       if (historyMap.containsKey(task.getId())) {
-           removeNode(historyMap.get(task.getId()));
-       }
+        if (historyMap.containsKey(task.getId())) {
+            removeNode(historyMap.get(task.getId()));
+        }
 
-       if (tail == null) {
-           head = newNode;
-           tail = newNode;
-       } else {
-           tail.next = newNode;
-           newNode.prev = tail;
-           tail = newNode;
-       }
-       historyMap.put(task.getId(), newNode);
-   }
+        if (tail == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
+        }
+        historyMap.put(task.getId(), newNode);
+    }
 
     public List<Task> getTasks() {
         List<Task> tasks = new ArrayList<>();

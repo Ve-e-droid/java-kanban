@@ -5,10 +5,11 @@ import com.model.tasks.Epic;
 import com.model.tasks.Subtask;
 import com.model.tasks.Task;
 import com.main.structure.historymanager.InMemoryHistoryManager;
-import com.status.Status;
+import com.model.tasks.TaskType;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
@@ -151,8 +152,10 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteEpicById(int id) {
         Epic epic = epics.remove(id);
-        for (Integer subtaskId : epic.getSubtaskIds()) {
-            subtasks.remove(subtaskId);
+        if (epic != null) {
+            for (Integer subtaskId : epic.getSubtaskIds()) {
+                subtasks.remove(subtaskId);
+            }
         }
     }
 
@@ -183,22 +186,22 @@ public class InMemoryTaskManager implements TaskManager {
         for (Integer id : subtaskIds) {
             Subtask subtask = subtasks.get(id);
             if (subtask != null) {
-                if (subtask.getStatus() == Status.IN_PROGRESS) {
+                if (subtask.getStatus() == TaskType.Status.IN_PROGRESS) {
                     anyInProgress = true;
                     allDone = false;
                     break;
-                } else if (subtask.getStatus() == Status.NEW) {
+                } else if (subtask.getStatus() == TaskType.Status.NEW) {
                     allDone = false;
                 }
             }
         }
 
         if (allDone) {
-            epic.setStatus(Status.DONE);
+            epic.setStatus(TaskType.Status.DONE);
         } else if (anyInProgress) {
-            epic.setStatus(Status.IN_PROGRESS);
+            epic.setStatus(TaskType.Status.IN_PROGRESS);
         } else {
-            epic.setStatus(Status.NEW);
+            epic.setStatus(TaskType.Status.NEW);
         }
     }
 
@@ -234,11 +237,13 @@ public class InMemoryTaskManager implements TaskManager {
 
         epic.setDuration(duration);
         epic.setStartTime(startTime);
-        epic.setEndTime(endTime);
+        epic.endTime();
 
     }
 
 }
+
+
 
 
 
